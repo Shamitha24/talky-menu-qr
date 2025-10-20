@@ -10,13 +10,15 @@ import { Input } from '@/components/ui/input';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  suggestions?: string[];
 }
 
 export const MenuChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm your voice menu assistant. You can ask me about our dishes, ingredients, or recommendations. Try saying 'What appetizers do you have?' or just type your question!"
+      content: "Hi! I'm your voice menu assistant. You can ask me about our dishes, ingredients, or recommendations. Try saying 'What appetizers do you have?' or just type your question!",
+      suggestions: ["Show me appetizers", "What's your special today?", "Do you have vegetarian options?"]
     }
   ]);
   const [isListening, setIsListening] = useState(false);
@@ -98,7 +100,8 @@ export const MenuChat = () => {
 
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.message
+        content: data.message,
+        suggestions: data.suggestions || []
       };
       
       setMessages(prev => [...prev, assistantMessage]);
@@ -134,19 +137,36 @@ export const MenuChat = () => {
     <div className="flex flex-col h-[600px] max-w-2xl mx-auto">
       <Card className="flex-1 overflow-y-auto p-6 space-y-4 bg-card/50 backdrop-blur">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
+          <div key={index} className="flex flex-col gap-2">
             <div
-              className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                message.role === 'user'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground'
-              }`}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              {message.content}
+              <div
+                className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                  message.role === 'user'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground'
+                }`}
+              >
+                {message.content}
+              </div>
             </div>
+            {message.role === 'assistant' && message.suggestions && message.suggestions.length > 0 && (
+              <div className="flex flex-wrap gap-2 justify-start">
+                {message.suggestions.map((suggestion, idx) => (
+                  <Button
+                    key={idx}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleSendMessage(suggestion)}
+                    className="text-xs rounded-full bg-accent/50 hover:bg-accent border-accent"
+                    disabled={isProcessing}
+                  >
+                    {suggestion}
+                  </Button>
+                ))}
+              </div>
+            )}
           </div>
         ))}
         {isProcessing && (

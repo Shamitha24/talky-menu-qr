@@ -71,7 +71,19 @@ Guidelines:
 - Inform about allergens and dietary options
 - Keep responses conversational and concise (2-3 sentences usually)
 - If asked about items not on the menu, politely say we don't offer that but suggest similar alternatives
-- For vague requests like "something good", ask about preferences (meat/vegetarian, spicy/mild, etc.)`
+- For vague requests like "something good", ask about preferences (meat/vegetarian, spicy/mild, etc.)
+
+IMPORTANT: Always respond with valid JSON in this format:
+{
+  "message": "your conversational response here",
+  "suggestions": ["suggestion 1", "suggestion 2", "suggestion 3"]
+}
+
+After each response, provide 2-3 smart follow-up suggestions that are relevant to the conversation:
+- If talking about appetizers: "Tell me about main courses", "Any vegetarian options?", "What's popular?"
+- If discussing dietary needs: "Show me the full menu", "Any gluten-free desserts?", "What about drinks?"
+- If asked about specific dishes: "What pairs well with this?", "Tell me about desserts", "Any other recommendations?"
+- General context: "Chef's recommendation?", "What's your special today?", "Do you have cocktails?"`
           },
           ...messages
         ],
@@ -85,7 +97,22 @@ Guidelines:
     }
 
     const aiData = await aiResponse.json();
-    const messageText = aiData.choices[0].message.content;
+    const aiContent = aiData.choices[0].message.content;
+    
+    // Parse JSON response
+    let messageText = aiContent;
+    let suggestions: string[] = [];
+    
+    try {
+      const parsed = JSON.parse(aiContent);
+      messageText = parsed.message;
+      suggestions = parsed.suggestions || [];
+    } catch (parseError) {
+      // If not valid JSON, use as plain text and generate generic suggestions
+      console.warn("Failed to parse AI response as JSON, using plain text");
+      messageText = aiContent;
+      suggestions = ["Tell me more", "What else do you recommend?", "Show me desserts"];
+    }
 
     // Generate speech from text
     const ttsResponse = await fetch("https://api.openai.com/v1/audio/speech", {
@@ -115,6 +142,7 @@ Guidelines:
       JSON.stringify({
         message: messageText,
         audio: audioBase64,
+        suggestions,
       }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
