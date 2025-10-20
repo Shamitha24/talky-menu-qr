@@ -122,7 +122,10 @@ Provide 3 contextual follow-up suggestions (5-7 words each):
     }
 
     const aiData = await aiResponse.json();
-    const aiContent = aiData.choices[0].message.content;
+    let aiContent = aiData.choices[0].message.content;
+    
+    // Remove markdown code blocks if present
+    aiContent = aiContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
     
     // Parse JSON response
     let messageText = aiContent;
