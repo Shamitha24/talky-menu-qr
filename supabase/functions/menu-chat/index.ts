@@ -6,30 +6,55 @@ const corsHeaders = {
 };
 
 const MENU_DATA = `
-APPETIZERS:
-- Truffle Mushroom Bruschetta ($12) - Wild mushrooms, truffle oil, goat cheese on toasted sourdough
-- Crispy Calamari ($14) - Lightly fried, served with spicy aioli and lemon
-- Buffalo Mozzarella Caprese ($13) - Fresh tomatoes, basil, balsamic reduction
-- Asian Fusion Wings ($11) - Crispy wings with sweet chili glaze
+# UTD DINING LOCATIONS & INFORMATION
 
-MAIN COURSES:
-- Grilled Ribeye Steak ($38) - 12oz prime ribeye, herb butter, seasonal vegetables
-- Pan-Seared Salmon ($32) - Atlantic salmon, lemon butter sauce, asparagus, quinoa
-- Chicken Parmesan ($26) - Breaded chicken breast, marinara, mozzarella, pasta
-- Vegetarian Buddha Bowl ($22) - Quinoa, roasted vegetables, tahini dressing, avocado
-- Lobster Linguine ($42) - Fresh lobster, white wine cream sauce, cherry tomatoes
+## THE PUB (Main Dining Hall)
+Hours: Monday-Friday 7am-8pm, Saturday-Sunday 10am-7pm
+Location: Residence Hall West
 
-DESSERTS:
-- Chocolate Lava Cake ($9) - Warm chocolate cake, vanilla ice cream
-- Tiramisu ($8) - Classic Italian dessert, espresso-soaked ladyfingers
-- Crème Brûlée ($8) - Vanilla custard, caramelized sugar
-- Seasonal Fruit Tart ($7) - Fresh berries, pastry cream
+STATIONS:
+- Build Your Own Bowl: Customizable bowls with proteins (chicken, tofu, beef), grains (rice, quinoa), and fresh vegetables
+- Pizza & Pasta Bar: Daily fresh pizzas, pasta with various sauces
+- Grill Station: Burgers, chicken sandwiches, veggie burgers, hot dogs
+- Salad Bar: Fresh greens, 20+ toppings, 8 dressings
+- International Station: Rotating daily themes
+  * Monday: Mexican (tacos, burritos, quesadillas)
+  * Tuesday: Asian (stir fry, fried rice, lo mein)
+  * Wednesday: Mediterranean (falafel, hummus, pita)
+  * Thursday: Italian (pasta varieties, marinara)
+  * Friday: American comfort food
 
-DRINKS:
-- House Wine (glass $10, bottle $38)
-- Craft Cocktails ($12-15)
-- Fresh Squeezed Juices ($6)
-- Specialty Coffee & Tea ($4-6)
+## COMET CAFE (Student Union)
+Hours: Monday-Friday 7:30am-6pm (Closed weekends)
+Location: Student Union, 2nd Floor
+
+RESTAURANTS:
+- Starbucks: Full coffee bar, pastries, breakfast sandwiches
+- Chick-fil-A: Chicken sandwiches, nuggets, waffle fries, salads
+- Freshens: Smoothies, frozen yogurt, healthy wraps
+- Einstein Bros. Bagels: Fresh bagels, cream cheese, breakfast sandwiches
+
+## CONVENIENCE STORES
+CV1 (Residence Hall West): Open 24/7
+CV2 (Phase 8): Mon-Thu 8am-12am, Fri 8am-8pm, Sat-Sun 12pm-8pm
+- Grab-and-go meals, snacks, drinks, basic groceries
+- Hot food items, sandwiches, salads
+- All Comet Card accepted
+
+## MEAL PLANS
+- Unlimited Access: Unlimited dining hall visits
+- Block 125: 125 meals per semester
+- Block 100: 100 meals per semester
+- Block 75: 75 meals per semester
+- Declining Balance: Flex dollars for all locations
+- All plans include Comet Card dollars
+
+## DIETARY OPTIONS
+- Vegetarian & Vegan: Available at all stations
+- Gluten-Free: Marked on menus, dedicated prep area
+- Halal: Available at international station
+- Allergen Info: Available on request or online
+- Kosher: Limited options, contact dining services
 `;
 
 serve(async (req) => {
@@ -59,31 +84,31 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are a friendly, knowledgeable restaurant menu assistant. Your role is to help customers understand our menu, make recommendations, and answer questions about dishes, ingredients, dietary restrictions, and preparation methods.
+            content: `You are the UTD Dining Assistant, a friendly and helpful guide for students navigating dining options on the UT Dallas campus. Help students find food, understand meal plans, check hours, and discover dietary options.
 
-Here is our complete menu:
+Here is the complete UTD dining information:
 ${MENU_DATA}
 
 Guidelines:
-- Be warm, enthusiastic, and helpful
-- Provide detailed descriptions when asked
-- Make personalized recommendations based on customer preferences
-- Inform about allergens and dietary options
-- Keep responses conversational and concise (2-3 sentences usually)
-- If asked about items not on the menu, politely say we don't offer that but suggest similar alternatives
-- For vague requests like "something good", ask about preferences (meat/vegetarian, spicy/mild, etc.)
+- Be enthusiastic, student-friendly, and campus-oriented
+- Keep responses concise (2-3 sentences)
+- Always mention Comet Card acceptance
+- Highlight dietary accommodations when relevant
+- Use "we" and "our campus" language
+- Reference specific locations and hours
+- Suggest meal plan options when appropriate
 
 IMPORTANT: Always respond with valid JSON in this format:
 {
-  "message": "your conversational response here",
+  "message": "your helpful response here",
   "suggestions": ["suggestion 1", "suggestion 2", "suggestion 3"]
 }
 
-After each response, provide 2-3 smart follow-up suggestions that are relevant to the conversation:
-- If talking about appetizers: "Tell me about main courses", "Any vegetarian options?", "What's popular?"
-- If discussing dietary needs: "Show me the full menu", "Any gluten-free desserts?", "What about drinks?"
-- If asked about specific dishes: "What pairs well with this?", "Tell me about desserts", "Any other recommendations?"
-- General context: "Chef's recommendation?", "What's your special today?", "Do you have cocktails?"`
+Provide 3 contextual follow-up suggestions (5-7 words each):
+- About locations: "What's open late?", "Tell me about meal plans", "Any vegan options?"
+- About food: "What's at The Pub today?", "Where can I use my Comet Card?", "Halal options available?"
+- About hours: "When does Comet Cafe open?", "Which stores are 24/7?", "Weekend dining hours?"
+- General: "Best spots for breakfast?", "Healthiest options on campus?", "How do meal plans work?"`
           },
           ...messages
         ],

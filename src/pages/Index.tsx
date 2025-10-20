@@ -24,10 +24,10 @@ const Index = () => {
             <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
               <img src={voiceIcon} alt="Voice Menu" className="w-24 h-24 mb-6 animate-pulse" />
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
-                Your Menu, Now <span className="text-primary">Talks</span>
+                UTD Dining <span className="text-primary">Reimagined</span>
               </h1>
               <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl">
-                Skip the paper menu. Have a conversation with our AI-powered voice assistant and discover dishes you'll love.
+                Your personal AI dining assistant for UTD campus. Ask about menus, nutrition, hours, and get personalized recommendations.
               </p>
               <Button 
                 size="lg" 
@@ -47,9 +47,9 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <QrCode className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Scan & Start</h3>
+                <h3 className="text-xl font-semibold mb-2">Quick Access</h3>
                 <p className="text-muted-foreground">
-                  Simply scan the QR code on your table and start chatting with your personal menu assistant
+                  Scan QR codes at any UTD dining location or access directly to start your dining experience
                 </p>
               </Card>
 
@@ -59,7 +59,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Voice or Text</h3>
                 <p className="text-muted-foreground">
-                  Ask questions using your voice or type them. Get instant recommendations and descriptions
+                  Ask about today's menu, dietary options, hours, or get recommendations - using voice or text
                 </p>
               </Card>
 
@@ -67,9 +67,9 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <Sparkles className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Smart Suggestions</h3>
+                <h3 className="text-xl font-semibold mb-2">Campus-Specific</h3>
                 <p className="text-muted-foreground">
-                  Get personalized recommendations based on your preferences and dietary needs
+                  Information tailored to UTD dining halls, meal plans, and Comet Card compatibility
                 </p>
               </Card>
             </div>
@@ -79,17 +79,17 @@ const Index = () => {
           <section className="container mx-auto px-4 py-16 text-center">
             <Card className="p-12 max-w-3xl mx-auto bg-gradient-to-br from-primary/5 to-accent/5">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Ready for a Different Dining Experience?
+                Ready to Transform Your UTD Dining?
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Try our voice menu now and discover your next favorite dish through conversation
+                Chat with your AI assistant now and discover what's available across campus today
               </p>
               <Button 
                 size="lg"
                 onClick={() => setShowChat(true)}
                 className="text-lg px-8 py-6"
               >
-                Try Voice Menu Demo
+                Start UTD Dining Assistant
               </Button>
             </Card>
           </section>
@@ -105,8 +105,8 @@ const Index = () => {
               ← Back to Home
             </Button>
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-2">Voice Menu Assistant</h2>
-              <p className="text-muted-foreground">Ask me anything about our menu!</p>
+              <h2 className="text-3xl font-bold mb-2">UTD Dining Assistant</h2>
+              <p className="text-muted-foreground">Ask me anything about UTD dining options!</p>
             </div>
             <MenuChat />
           </div>
