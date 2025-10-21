@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Mic, MicOff, Send } from 'lucide-react';
 import { VoiceWave } from './VoiceWave';
+import { AvatarAssistant } from './AvatarAssistant';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
@@ -29,10 +30,21 @@ export const MenuChat = () => {
   const { toast } = useToast();
   const recognitionRef = useRef<any>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const speechSynthRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [hasGreeted, setHasGreeted] = useState(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Greet user on mount with voice
+  useEffect(() => {
+    if (!hasGreeted && messages.length > 0) {
+      setHasGreeted(true);
+      const greeting = messages[0].content;
+      speakText(greeting);
+    }
+  }, [hasGreeted, messages]);
 
   useEffect(() => {
     // Initialize speech recognition
@@ -61,6 +73,29 @@ export const MenuChat = () => {
       };
     }
   }, []);
+
+  const speakText = (text: string) => {
+    if ('speechSynthesis' in window) {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+      
+      setIsSpeaking(true);
+      speechSynthRef.current = new SpeechSynthesisUtterance(text);
+      speechSynthRef.current.rate = 1.0;
+      speechSynthRef.current.pitch = 1.0;
+      speechSynthRef.current.volume = 1.0;
+      
+      speechSynthRef.current.onend = () => {
+        setIsSpeaking(false);
+      };
+      
+      speechSynthRef.current.onerror = () => {
+        setIsSpeaking(false);
+      };
+      
+      window.speechSynthesis.speak(speechSynthRef.current);
+    }
+  };
 
   const toggleListening = () => {
     if (!recognitionRef.current) {
@@ -106,16 +141,8 @@ export const MenuChat = () => {
       
       setMessages(prev => [...prev, assistantMessage]);
 
-      // Text-to-speech
-      if (data.audio) {
-        setIsSpeaking(true);
-        if (audioRef.current) {
-          audioRef.current.pause();
-        }
-        audioRef.current = new Audio(`data:audio/mp3;base64,${data.audio}`);
-        audioRef.current.onended = () => setIsSpeaking(false);
-        audioRef.current.play();
-      }
+      // Use text-to-speech for the response
+      speakText(data.message);
     } catch (error: any) {
       console.error('Chat error:', error);
       toast({
@@ -135,6 +162,11 @@ export const MenuChat = () => {
 
   return (
     <div className="flex flex-col h-[600px] max-w-2xl mx-auto">
+      {/* Avatar Assistant */}
+      <Card className="mb-4 bg-card/50 backdrop-blur">
+        <AvatarAssistant isSpeaking={isSpeaking} isListening={isListening} />
+      </Card>
+
       <Card className="flex-1 overflow-y-auto p-6 space-y-4 bg-card/50 backdrop-blur">
         {messages.map((message, index) => (
           <div key={index} className="flex flex-col gap-2">
