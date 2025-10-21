@@ -176,7 +176,7 @@ export const AvatarAssistant = ({ isSpeaking, isListening }: AvatarAssistantProp
           {isSpeaking ? "Speaking..." : isListening ? "Listening..." : "Ready to help!"}
         </p>
         <p className="text-sm text-muted-foreground mt-1.5 font-medium">
-          UTD Dining Assistant
+          Your Talking Menu
         </p>
       </div>
     </div>

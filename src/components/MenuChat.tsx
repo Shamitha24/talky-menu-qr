@@ -18,8 +18,8 @@ export const MenuChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm your voice menu assistant. You can ask me about our dishes, ingredients, or recommendations. Try saying 'What appetizers do you have?' or just type your question!",
-      suggestions: ["Show me appetizers", "What's your special today?", "Do you have vegetarian options?"]
+      content: "Hey there! I'm your talking menu. Ask me anything about what we're serving today - prices, ingredients, recommendations. I'm here to make ordering easy!",
+      suggestions: ["What's good today?", "Show me vegetarian options", "What can I get with my meal plan?"]
     }
   ]);
   const [isListening, setIsListening] = useState(false);
